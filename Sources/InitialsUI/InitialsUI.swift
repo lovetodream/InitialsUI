@@ -49,9 +49,21 @@ public struct InitialsUI<Content: View>: View {
                     .font(.system(size: g.size.width * 0.8))
                     .fontWeight(fontWeight)
                     .modifier(FitToWidth())
-                    .padding(g.size.width > 100 ? 20 : 0)
+                    .padding(calculatePadding(width: g.size.width))
             }
         }
+    }
+    
+    private func calculatePadding(width: CGFloat) -> CGFloat {
+        if (width <= 50 && initials.count > 1) {
+            return 2
+        }
+        
+        if (width <= 100) {
+            return 5
+        }
+        
+        return 20
     }
 }
 
@@ -122,7 +134,7 @@ extension InitialsUI where Content == Color {
     /// - Parameter fontWeight: The font weight used on the initials
     /// - Parameter randomBackground: Use a random background
     ///
-    /// - Returns: A view with the initials from provided the string
+    /// - Returns: A view with the initials from provided the initials
     ///
     /// - warning: If you don't want to use random backgrounds, use a different initializer!
     public init(initials: String,
@@ -211,7 +223,7 @@ struct FitToWidth: ViewModifier {
 // MARK: Color randomization methods
 
 func randomColorComponent() -> Int {
-    let limit = 30 - 214
+    let limit = 214 - 30
     return 30 + Int(drand48() * Double(limit))
 }
 
