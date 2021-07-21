@@ -25,7 +25,7 @@ public struct InitialsUI<Content: View>: View {
                     
                 Text(initials)
                     .modifier(FitToWidth())
-                    .padding()
+                    .padding(g.size.width > 100 ? 20 : 0)
             }
         }
     }
@@ -94,6 +94,9 @@ struct InitialsUI_Previews: PreviewProvider {
         InitialsUI(initials: "TZ") {
             Color.yellow
         }.foregroundColor(.white)
-        InitialsUI(initials: "TZ")
+        VStack(spacing: 20) {
+            InitialsUI(initials: "TZ").frame(width: 200, height: 200)
+            InitialsUI(initials: "TZ").frame(width: 100, height: 100)
+        }
     }
 }
