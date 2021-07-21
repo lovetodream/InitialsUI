@@ -15,6 +15,18 @@ public struct InitialsUI<Content: View>: View {
         }
     }
     
+    /// Initializes a InitialsUI View from the first letter of every word from a string
+    ///
+    /// ```swift
+    /// Initials(text: .constant("John Doe"), useDefaultForegroundColor: true, fontWeight: .medium) { Color.black } // Displays a View with a white medium weight JD and black background
+    /// ```
+    ///
+    /// - Parameter text: The text used to create the initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    /// - Parameter background: Any view that as the background
+    ///
+    /// - Returns: A view with the initials from provided the string
     public init(text: Binding<String>,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil,
@@ -44,6 +56,18 @@ public struct InitialsUI<Content: View>: View {
 }
 
 extension InitialsUI {
+    /// Initializes a InitialsUI View from the provided initials
+    ///
+    /// ```swift
+    /// Initials(initials: "John Doe", useDefaultForegroundColor: true, fontWeight: .medium) { Color.black } // Displays a View with a white medium weight JD and black background
+    /// ```
+    ///
+    /// - Parameter initials: The initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    /// - Parameter background: Any view that as the background
+    ///
+    /// - Returns: A view with the provided initials
     public init(initials: String,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil,
@@ -58,6 +82,20 @@ extension InitialsUI {
 }
 
 extension InitialsUI where Content == Color {
+    /// Initializes a InitialsUI View with a random background color using the first letter of every word from a string
+    ///
+    /// ```swift
+    /// Initials(text: .constant("John Doe"), useDefaultForegroundColor: true, fontWeight: .medium, randomBackground: true) // Displays a View with a white medium weight JD and a random background
+    /// ```
+    ///
+    /// - Parameter text: The text used to create the initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    /// - Parameter randomBackground: Use a random background
+    ///
+    /// - Returns: A view with the initials from provided the string
+    ///
+    /// - warning: If you don't want to use random backgrounds, use a different initializer!
     public init(text: Binding<String>,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil,
@@ -73,6 +111,20 @@ extension InitialsUI where Content == Color {
         }
     }
     
+    /// Initializes a InitialsUI View with a random background color using the provided initials
+    ///
+    /// ```swift
+    /// Initials(initials: "JD", useDefaultForegroundColor: true, fontWeight: .medium, randomBackground: true) // Displays a View with a white medium weight JD and a random background
+    /// ```
+    ///
+    /// - Parameter initials: The initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    /// - Parameter randomBackground: Use a random background
+    ///
+    /// - Returns: A view with the initials from provided the string
+    ///
+    /// - warning: If you don't want to use random backgrounds, use a different initializer!
     public init(initials: String,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil,
@@ -90,6 +142,19 @@ extension InitialsUI where Content == Color {
 }
 
 extension InitialsUI where Content == Color {
+    /// Initializes a InitialsUI View from the first letter of every word from a string with gray background
+    ///
+    /// ```swift
+    /// Initials(text: .constant("John Doe"), useDefaultForegroundColor: true, fontWeight: .medium) // Displays a View with a white medium weight JD and gray background
+    /// ```
+    ///
+    /// - Parameter text: The text used to create the initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    ///
+    /// - Returns: A view with the initials from provided the string
+    ///
+    /// - Warning: This initializer applies a gray background color by default!
     public init(text: Binding<String>,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil) {
@@ -100,6 +165,19 @@ extension InitialsUI where Content == Color {
         }
     }
     
+    /// Initializes a InitialsUI View from the provided initials with gray background
+    ///
+    /// ```swift
+    /// Initials(initials: "JD", useDefaultForegroundColor: true, fontWeight: .medium) // Displays a View with a white medium weight JD and gray background
+    /// ```
+    ///
+    /// - Parameter initials: The initials
+    /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
+    /// - Parameter fontWeight: The font weight used on the initials
+    ///
+    /// - Returns: A view with the initials from provided the string
+    ///
+    /// - Warning: This initializer applies a gray background color by default!
     public init(initials: String,
                 useDefaultForegroundColor: Bool = true,
                 fontWeight: Font.Weight? = nil) {
