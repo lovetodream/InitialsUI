@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct InitialsUI<Content: View>: View {
     @Binding var text: String
+    var font: Font = Font.body
     
     let background: Content
     
@@ -13,9 +14,12 @@ public struct InitialsUI<Content: View>: View {
         }
     }
     
-    public init(text: Binding<String>, @ViewBuilder background: @escaping () -> Content) {
+    public init(text: Binding<String>, font: Font? = nil, @ViewBuilder background: @escaping () -> Content) {
         self.background = background()
         self._text = text
+        if let ft = font {
+            self.font = ft
+        }
     }
     
     public var body: some View {
@@ -24,6 +28,7 @@ public struct InitialsUI<Content: View>: View {
                 background
                     
                 Text(initials)
+                    .font(font)
                     .modifier(FitToWidth())
                     .padding(g.size.width > 100 ? 20 : 0)
             }
@@ -32,22 +37,22 @@ public struct InitialsUI<Content: View>: View {
 }
 
 extension InitialsUI {
-    public init(initials: String, @ViewBuilder background: @escaping () -> Content) {
+    public init(initials: String, font: Font? = nil, @ViewBuilder background: @escaping () -> Content) {
         let text = initials.map { "\($0)" }.joined(separator: " ")
         
-        self.init(text: .constant(text), background: background)
+        self.init(text: .constant(text), font: font, background: background)
     }
 }
 
 extension InitialsUI where Content == Color {
-    public init(text: Binding<String>) {
-        self.init(text: text) {
+    public init(text: Binding<String>, font: Font? = nil) {
+        self.init(text: text, font: font) {
             Color.gray
         }
     }
     
-    public init(initials: String) {
-        self.init(initials: initials) {
+    public init(initials: String, font: Font? = nil) {
+        self.init(initials: initials, font: font) {
             Color.gray
         }
     }
@@ -63,7 +68,7 @@ struct FitToWidth: ViewModifier {
                     .font(.system(size: 1000))
                     .minimumScaleFactor(0.005)
                     .lineLimit(1)
-                    .frame(width: g.size.width*self.fraction)
+                    .frame(width: g.size.width * self.fraction)
                 Spacer()
             }
         }
@@ -97,6 +102,7 @@ struct InitialsUI_Previews: PreviewProvider {
         VStack(spacing: 20) {
             InitialsUI(initials: "TZ").frame(width: 200, height: 200)
             InitialsUI(initials: "TZ").frame(width: 100, height: 100)
+            InitialsUI(initials: "TZ", font: .system(size: 100, weight: .semibold, design: .default)).frame(width: 40, height: 40)
         }
     }
 }
