@@ -24,7 +24,7 @@ public struct InitialsUI<Content: View>: View {
     /// - Parameter text: The text used to create the initials
     /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
     /// - Parameter fontWeight: The font weight used on the initials
-    /// - Parameter background: Any view that as the background
+    /// - Parameter background: Any view as the background
     ///
     /// - Returns: A view with the initials from provided the string
     public init(text: Binding<String>,
@@ -65,7 +65,7 @@ extension InitialsUI {
     /// - Parameter initials: The initials
     /// - Parameter useDefaultForegroundColor: Use the default color white for the initials
     /// - Parameter fontWeight: The font weight used on the initials
-    /// - Parameter background: Any view that as the background
+    /// - Parameter background: Any view as the background
     ///
     /// - Returns: A view with the provided initials
     public init(initials: String,
