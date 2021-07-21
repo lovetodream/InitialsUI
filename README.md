@@ -19,7 +19,7 @@ A simple SwiftUI View for using initials as profile images.
 - Can be used with a Binding
 - Cross platform >= SwiftUI 1 (macOS 10.15, iOS 13, watchOS 6, tvOS 13)
  
-## Screenshots
+## 📸 Screenshots
 
 <img src="https://user-images.githubusercontent.com/38291523/126525899-10791422-0d7a-450e-a6d1-cc9da65b27f3.png" alt="Example Screenshot" width="420">
   
@@ -65,7 +65,7 @@ struct ContentView: View {
 
 Further information [here](#documentation)  
 
-## Documentation
+## 📝 Documentation
 
 ### Initializes a InitialsUI View from the first letter of every word from a string
 
