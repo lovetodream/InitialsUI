@@ -2,7 +2,8 @@ import SwiftUI
 
 public struct InitialsUI<Content: View>: View {
     @Binding var text: String
-    var font: Font = Font.body
+    var fontWeight: Font.Weight = .regular
+    var foregroundColor: Color?
     
     let background: Content
     
@@ -14,11 +15,15 @@ public struct InitialsUI<Content: View>: View {
         }
     }
     
-    public init(text: Binding<String>, font: Font? = nil, @ViewBuilder background: @escaping () -> Content) {
+    public init(text: Binding<String>,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil,
+                @ViewBuilder background: @escaping () -> Content) {
         self.background = background()
         self._text = text
-        if let ft = font {
-            self.font = ft
+        self.foregroundColor = useDefaultForegroundColor ? .white : .none
+        if let weight = fontWeight {
+            self.fontWeight = weight
         }
     }
     
@@ -28,7 +33,9 @@ public struct InitialsUI<Content: View>: View {
                 background
                     
                 Text(initials)
-                    .font(font)
+                    .foregroundColor(foregroundColor)
+                    .font(.system(size: g.size.width * 0.8))
+                    .fontWeight(fontWeight)
                     .modifier(FitToWidth())
                     .padding(g.size.width > 100 ? 20 : 0)
             }
@@ -37,22 +44,68 @@ public struct InitialsUI<Content: View>: View {
 }
 
 extension InitialsUI {
-    public init(initials: String, font: Font? = nil, @ViewBuilder background: @escaping () -> Content) {
+    public init(initials: String,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil,
+                @ViewBuilder background: @escaping () -> Content) {
         let text = initials.map { "\($0)" }.joined(separator: " ")
         
-        self.init(text: .constant(text), font: font, background: background)
+        self.init(text: .constant(text),
+                  useDefaultForegroundColor: useDefaultForegroundColor,
+                  fontWeight: fontWeight,
+                  background: background)
     }
 }
 
 extension InitialsUI where Content == Color {
-    public init(text: Binding<String>, font: Font? = nil) {
-        self.init(text: text, font: font) {
+    public init(text: Binding<String>,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil,
+                randomBackground: Bool) {
+        self.init(text: text,
+                  useDefaultForegroundColor: useDefaultForegroundColor,
+                  fontWeight: fontWeight) {
+            if randomBackground {
+                return randomColor(for: text.wrappedValue)
+            } else {
+                return Color.gray
+            }
+        }
+    }
+    
+    public init(initials: String,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil,
+                randomBackground: Bool) {
+        self.init(initials: initials,
+                  useDefaultForegroundColor: useDefaultForegroundColor,
+                  fontWeight: fontWeight) {
+            if randomBackground {
+                return randomColor(for: initials)
+            } else {
+                return Color.gray
+            }
+        }
+    }
+}
+
+extension InitialsUI where Content == Color {
+    public init(text: Binding<String>,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil) {
+        self.init(text: text,
+                  useDefaultForegroundColor: useDefaultForegroundColor,
+                  fontWeight: fontWeight) {
             Color.gray
         }
     }
     
-    public init(initials: String, font: Font? = nil) {
-        self.init(initials: initials, font: font) {
+    public init(initials: String,
+                useDefaultForegroundColor: Bool = true,
+                fontWeight: Font.Weight? = nil) {
+        self.init(initials: initials,
+                  useDefaultForegroundColor: useDefaultForegroundColor,
+                  fontWeight: fontWeight) {
             Color.gray
         }
     }
@@ -73,6 +126,25 @@ struct FitToWidth: ViewModifier {
             }
         }
     }
+}
+
+
+
+// MARK: Color randomization methods
+
+func randomColorComponent() -> Int {
+    let limit = 30 - 214
+    return 30 + Int(drand48() * Double(limit))
+}
+
+func randomColor(for string: String) -> Color {
+    srand48(string.hashValue)
+
+    let red = CGFloat(randomColorComponent()) / 255.0
+    let green = CGFloat(randomColorComponent()) / 255.0
+    let blue = CGFloat(randomColorComponent()) / 255.0
+    
+    return Color(red: red, green: green, blue: blue)
 }
 
 
@@ -102,7 +174,8 @@ struct InitialsUI_Previews: PreviewProvider {
         VStack(spacing: 20) {
             InitialsUI(initials: "TZ").frame(width: 200, height: 200)
             InitialsUI(initials: "TZ").frame(width: 100, height: 100)
-            InitialsUI(initials: "TZ", font: .system(size: 100, weight: .semibold, design: .default)).frame(width: 40, height: 40)
+            InitialsUI(initials: "TZ", fontWeight: .semibold).frame(width: 40, height: 40)
+            InitialsUI(initials: "TZ", fontWeight: .bold, randomBackground: true).frame(width: 40, height: 40)
         }
     }
 }
