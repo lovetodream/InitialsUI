@@ -13,7 +13,7 @@ public struct InitialsUI<Content: View>: View {
         }
     }
     
-    init(text: Binding<String>, @ViewBuilder background: @escaping () -> Content) {
+    public init(text: Binding<String>, @ViewBuilder background: @escaping () -> Content) {
         self.background = background()
         self._text = text
     }
@@ -32,7 +32,7 @@ public struct InitialsUI<Content: View>: View {
 }
 
 extension InitialsUI {
-    init(initials: String, @ViewBuilder background: @escaping () -> Content) {
+    public init(initials: String, @ViewBuilder background: @escaping () -> Content) {
         let text = initials.map { "\($0)" }.joined(separator: " ")
         
         self.init(text: .constant(text), background: background)
@@ -40,13 +40,13 @@ extension InitialsUI {
 }
 
 extension InitialsUI where Content == Color {
-    init(text: Binding<String>) {
+    public init(text: Binding<String>) {
         self.init(text: text) {
             Color.gray
         }
     }
     
-    init(initials: String) {
+    public init(initials: String) {
         self.init(initials: initials) {
             Color.gray
         }
